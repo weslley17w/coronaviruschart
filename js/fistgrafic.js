@@ -1,5 +1,5 @@
 let DataGrafic = new Array;
-DataGrafic.push(['Data', 'Casos Confirmados', 'Obitos', 'Curados'])
+DataGrafic.push(['Data', 'Casos Confirmados', 'Óbitos', 'Curados'])
 let sla;
 //
 
