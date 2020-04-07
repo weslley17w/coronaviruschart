@@ -1,6 +1,6 @@
 let DataGrafic = new Array;
 let WordXBrasil = new Array;
-DataGrafic.push(['Data', 'Casos Confirmados', 'Óbitos']);
+DataGrafic.push(['Data', 'Casos Confirmados', 'Óbitos', 'Recuperados']);
 WordXBrasil.push(['Data', 'Brasil', 'China', 'Itália', 'Estados Unidos']);
 let Country = new Array;
 //
@@ -19,7 +19,7 @@ $(document).ready(() =>{
 
             Country.forEach(a => {
                 if(a === 'brazil'){
-                    $('#Country_S').append('<option value="'+a+'" selected>'+a+'</option>');
+                    $('#Country_S').append('<option value="'+a+'" selected>'+B+'</option>');
                 }else{
                     $('#Country_S').append('<option value="'+a+'">'+a+'</option>');
                 }
@@ -36,7 +36,7 @@ $(document).ready(() =>{
                 year[0] = year[0] < 10 ? "0" + year[0].toString() : year[0];
                 year = year[1] + "/" + year[0] + "/" + (parseInt(year[2]) + 2000);
                 if(data.timeline.cases[a] > 0){
-                    DataGrafic.push([year, data.timeline.cases[a], data.timeline.deaths[a]]);
+                    DataGrafic.push([year, data.timeline.cases[a], data.timeline.deaths[a], data.timeline.recovered[a]]);
                 }
 
             });
@@ -104,7 +104,7 @@ $(document).ready(() =>{
 
     $("select#Country_S").change(function(){
         let AnyGrafic = new Array;
-        AnyGrafic.push(['Data', 'Casos Confirmados', 'Óbitos']);
+        AnyGrafic.push(['Data', 'Casos Confirmados', 'Óbitos', 'Recuperados']);
         value = this.value;
         fetch("https://corona.lmao.ninja/v2/historical/" +value)
             .then(response => response.json())
@@ -113,7 +113,7 @@ $(document).ready(() =>{
                     yeara = a.split('/');
                     yeara[0] = yeara[0] < 10 ? "0" + yeara[0].toString() : yeara[0];
                     yeara = yeara[1] + "/" + yeara[0] + "/" + (parseInt(yeara[2]) + 2000);
-                    AnyGrafic.push([yeara, data_any.timeline.cases[a], data_any.timeline.deaths[a]]);
+                    AnyGrafic.push([yeara, data_any.timeline.cases[a], data_any.timeline.deaths[a], data_any.timeline.recovered[a]]);
                 });
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(drawChartAny);
@@ -122,7 +122,7 @@ $(document).ready(() =>{
                     var dataAny = google.visualization.arrayToDataTable(AnyGrafic);
 
                     var optionsAny = {
-                        title: value,
+                        title: value.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); }),
                         curveType: 'function',
                         legend: { position: 'bottom' }
                     };
